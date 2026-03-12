@@ -1,39 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ConsoleApp1;
 
-
-internal class Program
+namespace ConsoleApp1
 {
-    static void Main()
+    internal class Program
     {
-        EasySet<int> set = new EasySet<int>();
-        EasySet<int> otherSet = new EasySet<int>();
-        EasySet<int> otherSet1 = new EasySet<int>();
-        
-        otherSet1.Add(1);
-        otherSet1.Add(2);
-        
-        set.Add(1);
-        set.Add(2);
-        set.Add(3);
-        set.Add(4);
-        
-        otherSet.Add(3);
-        otherSet.Add(4);
-        otherSet.Add(5);
-        otherSet.Add(6);
-        
-        var differenceSet = otherSet.Difference(set);
-        var intersectionSet = set.Intersect(otherSet);
-        var symmetricDifference = set.SymmetricDifference(otherSet);
-        
-        differenceSet.ViewSet();
-        intersectionSet.ViewSet();
-        symmetricDifference.ViewSet();
+        static void Main()
+        {
+            SuperHashTable<Person> superHashTable = new SuperHashTable<Person>(100);
 
-        Console.WriteLine(set.SubSet(otherSet));
+            Person tom = new Person("Tom", 20);
+            Person bob = new Person("Bob", 30);
+            Person john = new Person("John", 25);
+            Person alice =  new Person("Alice", 18);
+            Person kate = new Person("Kate", 30);
+            
+            superHashTable.Add(tom);
+            superHashTable.Add(bob);
+            superHashTable.Add(john);
+
+            Console.WriteLine(superHashTable.Search(new Person("Tom", 20)));
+            Console.WriteLine(superHashTable.Search(tom));
+            
+            Console.ReadKey();
+            
+            HashTable<int, string> hashTable = new HashTable<int, string>(10);
+            
+            hashTable.Add(5, "Привет");
+            hashTable.Add(18, "Мир");
+            hashTable.Add(200, "Hello");
+            hashTable.Add(5, "Hello!");
+
+            Console.WriteLine(hashTable.Search(6, "Привет"));
+            Console.WriteLine(hashTable.Search(18, "Мир"));
+
+            Console.ReadKey();
+            
+            BadHashTable<int> badHashTable = new BadHashTable<int>(10);
+            
+            badHashTable.Add(5);
+            badHashTable.Add(18);
+            badHashTable.Add(200);
+
+            Console.WriteLine(badHashTable.Search(6));
+            Console.WriteLine(badHashTable.Search(18));
+        }
     }
 }
 

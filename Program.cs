@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace ConsoleApp1
 {
@@ -6,43 +7,28 @@ namespace ConsoleApp1
     {
         static void Main()
         {
-            SuperHashTable<Person> superHashTable = new SuperHashTable<Person>(100);
-
-            Person tom = new Person("Tom", 20);
-            Person bob = new Person("Bob", 30);
-            Person john = new Person("John", 25);
-            Person alice =  new Person("Alice", 18);
-            Person kate = new Person("Kate", 30);
+            MyDictionary<int, string> myDictionary = new MyDictionary<int, string>(100);
+            myDictionary.Add(new DictItem<int, string>(176, "Masha"));
+            myDictionary.Add(new DictItem<int, string>(2, "Kara"));
+            myDictionary.Add(new DictItem<int, string>(20, "Mike"));
+            myDictionary.Add(new DictItem<int, string>(10, "Daria"));
+            myDictionary.Add(new DictItem<int, string>(20, "Jerry"));
             
-            superHashTable.Add(tom);
-            superHashTable.Add(bob);
-            superHashTable.Add(john);
-
-            Console.WriteLine(superHashTable.Search(new Person("Tom", 20)));
-            Console.WriteLine(superHashTable.Search(tom));
+            myDictionary.Show();
             
             Console.ReadKey();
             
-            HashTable<int, string> hashTable = new HashTable<int, string>(10);
+            myDictionary.Remove(2);
+            myDictionary.Remove(201);
+            myDictionary.Show();
             
-            hashTable.Add(5, "Привет");
-            hashTable.Add(18, "Мир");
-            hashTable.Add(200, "Hello");
-            hashTable.Add(5, "Hello!");
-
-            Console.WriteLine(hashTable.Search(6, "Привет"));
-            Console.WriteLine(hashTable.Search(18, "Мир"));
-
             Console.ReadKey();
-            
-            BadHashTable<int> badHashTable = new BadHashTable<int>(10);
-            
-            badHashTable.Add(5);
-            badHashTable.Add(18);
-            badHashTable.Add(200);
 
-            Console.WriteLine(badHashTable.Search(6));
-            Console.WriteLine(badHashTable.Search(18));
+            Console.WriteLine(myDictionary.Search(176));
+            Console.WriteLine(myDictionary.Search(20));
+            Console.WriteLine(myDictionary.Search(100));
+            
+            Console.ReadKey();
         }
     }
 }

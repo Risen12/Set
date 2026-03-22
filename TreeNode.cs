@@ -23,7 +23,6 @@ public class TreeNode<T> : IComparable
     public TreeNode<T> Left { get; set; }
     public TreeNode<T> Right { get; set; }
 
-
     public int CompareTo(object? obj)
     {
         if (obj is TreeNode<T> item)
@@ -33,6 +32,32 @@ public class TreeNode<T> : IComparable
         else
         {
             throw new Exception($"Невозможно сравнить тип {obj.GetType()} c TreeNode!");
+        }
+    }
+
+    public void Add(TreeNode<T> node)
+    {
+        if (node.CompareTo(this) >= 0)
+        {
+            if (Right != null)
+            {
+                Right.Add(node);
+            }
+            else
+            {
+                Right = node;
+            }
+        }
+        else
+        {
+            if (Left != null)
+            {
+                Left.Add(node);
+            }
+            else
+            {
+                Left = node;
+            }
         }
     }
 }

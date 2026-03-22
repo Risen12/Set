@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleApp1;
 
 public class BinaryTree<T> where T : IComparable
 {
     private TreeNode<T> _root;
+    private int _count;
     
+    public BinaryTree()
+    {
+        _count = 0;
+        _root = null;
+    }
+
     public void Add(T data)
     {
         var node = new TreeNode<T>(data);
@@ -15,37 +23,95 @@ public class BinaryTree<T> where T : IComparable
             _root = node;
             return;
         }
+        
+        _root.Add(node);
+    }
 
-        var currentNode =  _root;
+    public List<T> PreOrder()
+    {
+        if (_root == null)
+            return new List<T>();
 
-        while (true)
+        return GetNodeDataPreOder(_root);
+    }
+    
+    public List<T> PostOrder()
+    {
+        if (_root == null)
+            return new List<T>();
+
+        return GetNodeDataPostOder(_root);
+    }
+
+    public List<T> InOrder()
+    {
+        if (_root == null)
+            return new List<T>();
+
+        return GetNodeDataInOrder(_root);
+    }
+
+    private List<T> GetNodeDataInOrder(TreeNode<T> node)
+    {
+        var list = new List<T>();
+        
+        if (node != null)
         {
-            int compareResult = currentNode.CompareTo(node);
-
-            if (compareResult >= 0)
+            if (node.Left != null)
             {
-                if (currentNode.Left == null)
-                {
-                    currentNode.Left = node;
-                    return;
-                }
-                else
-                {
-                    currentNode = currentNode.Left;
-                }
+                list.AddRange(GetNodeDataInOrder(node.Left));
             }
-            else if (compareResult < 0)
+            
+            list.Add(node.Data);
+            
+            if (node.Right != null)
             {
-                if (currentNode.Right == null)
-                {
-                    currentNode.Right = node;
-                    return;
-                }
-                else
-                {
-                    currentNode = currentNode.Right;
-                }
+                list.AddRange(GetNodeDataInOrder(node.Right));
             }
         }
+
+        return list;
+    }
+
+    private List<T> GetNodeDataPreOder(TreeNode<T> node)
+    {
+        var list = new List<T>();
+        
+        if (node != null)
+        {
+            list.Add(node.Data);
+            
+            if (node.Left != null)
+            {
+                list.AddRange(GetNodeDataPreOder(node.Left));
+            }
+            if (node.Right != null)
+            {
+                list.AddRange(GetNodeDataPreOder(node.Right));
+            }
+        }
+
+        return list;
+    }
+
+    private List<T> GetNodeDataPostOder(TreeNode<T> node)
+    {
+        var list = new List<T>();
+        
+        if (node != null)
+        {
+            if (node.Left != null)
+            {
+                list.AddRange(GetNodeDataPostOder(node.Left));
+            }
+            if (node.Right != null)
+            {
+                list.AddRange(GetNodeDataPostOder(node.Right));
+            }
+            
+            list.Add(node.Data);
+        }
+
+        return list;
     }
 }
